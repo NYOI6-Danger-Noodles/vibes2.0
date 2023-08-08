@@ -5,7 +5,7 @@ import ResultRow from './ResultRow.jsx'
 const SearchPage = () => {
     const [categories, setCategories] = useState([]);
     const [neighborhoods, setNeighborhoods] = useState([]);
-    const [tags, setTags] = useState([]);
+    // const [tags, setTags] = useState([]);
     const [results, setResults] = useState([]);
     const rows = [];
 
@@ -16,9 +16,6 @@ const SearchPage = () => {
         } else if (actionMeta.name === 'neighborhoods') {
             const selectedValues = selectedOptions.map(option => option.value);
             setNeighborhoods([...new Set(selectedValues)]);
-        } else if (actionMeta.name === 'tags') {
-            const selectedValues = selectedOptions.map(option => option.value);
-            setTags([...new Set(selectedValues)]);
         }
     };
 
@@ -50,17 +47,20 @@ const SearchPage = () => {
 
     const categoriesOptions = [
         { value:'Brewery', label:'Brewery' },
+        { value:'Bar', label:'Bar' },
         { value:'Cafe', label:'Cafe' },
         { value:'Library', label:'Library' },
-        { value:'Park', label:'Park' }
+        { value:'Park', label:'Park' },
+        { value:'Coworking Space', label:'Coworking Space' }
     ]
     const neighborhoodOptions = [
         { value:'Battery Park City', label:'Battery Park City' },
         { value:'Chelsea', label:'Chelsea' },
         { value:'City Hall', label:'City Hall' },
-        { value:'Clinton', label:'Clinton' },
+        { value:'Clinton Hill', label:'Clinton Hill' },
         { value:'East Harlem', label:'East Harlem' },
         { value:'East Village', label:'East Village' },
+        { value:'West Village', label:'West Village' },
         { value:'Gramercy Park', label:'Gramercy Park' },
         { value:'Hamilton Heights', label:'Hamilton Heights' },
         { value:'Harlem', label:'Harlem' },
@@ -76,7 +76,8 @@ const SearchPage = () => {
         { value:'Upper East Side', label:'Upper East Side' },
         { value:'Upper West Side', label:'Upper West Side' },
         { value:'Wall Street', label:'Wall Street' },
-        { value:'Washington Heights', label:'Washington Heights' }
+        { value:'Washington Heights', label:'Washington Heights' },
+        { value:'Park Slope', label:'Park Slope' }
     ]
     const tagOptions = [
         { value:'Good Coffee', label:'Good Coffee' },
@@ -97,8 +98,8 @@ const SearchPage = () => {
                     <ReactSelect name='categories' options={categoriesOptions} value={categories.map(value => ({ value, label: value }))} onChange={handleChange} isMulti/>
                 <label>Neighborhood</label>
                     <ReactSelect name='neighborhoods' options={neighborhoodOptions} value={neighborhoods.map(value => ({ value, label: value }))} onChange={handleChange} isMulti/>
-                <label>Tags</label>
-                    <ReactSelect name='tags' options={tagOptions} value={tags.map(value => ({ value, label: value }))} onChange={handleChange} isMulti/>
+                {/* <label>Tags</label>
+                    <ReactSelect name='tags' options={tagOptions} value={tags.map(value => ({ value, label: value }))} onChange={handleChange} isMulti/> */}
                 <button onClick={querySQL}>Find!</button>
             </div>
             <table>

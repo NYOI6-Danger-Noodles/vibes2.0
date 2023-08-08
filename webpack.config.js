@@ -3,7 +3,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devServer: {
-    // hot: true,
+    hot: true,
     historyApiFallback: true,
     port: 8080,
     static: [
@@ -49,7 +49,7 @@ module.exports = {
         // for CSS/SASS files
         test: /.(css|scss)$/,
         exclude: path.resolve(__dirname, 'node_modules'),
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/i,

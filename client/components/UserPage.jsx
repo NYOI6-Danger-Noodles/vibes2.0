@@ -76,6 +76,7 @@ const UserPage = ({ username }) => {
             </tr>
             <tr>
               <th>Bean & Bean Chelsea</th>
+              <button>Rate</button>
             </tr>
             <tr>
               <th>Gregorys Coffee</th>

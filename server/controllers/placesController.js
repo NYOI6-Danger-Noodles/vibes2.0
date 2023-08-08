@@ -1,27 +1,47 @@
 const db = require('../../models/placesModel')
+const axios = require('axios');
 
 const placesController = {};
 
-//populate search results
+
+
+
 placesController.getResults = async (req, res, next) => {
     try{
         const { categories, neighborhoods } = req.body
 
-        function format(array) {
-            const joined = array.map(value => `'${value}'`).join(', ');
-            const formatted = '(' + joined + ')';
-            return formatted;
+        const params = new URLSearchParams({
+            query: `${categories[0]}s in ${neighborhoods[0]}, NY`,
+            key: 'AIzaSyCcPpO8Oh7OERkSYaJMpHfRpkoNemUV73s'
+        })
+        
+        const config = {
+            method: 'get',
+            url: 'https://maps.googleapis.com/maps/api/place/textsearch/json?' + params,
+            headers: { }
+          };
+          console.log('reached controller')
+          axios(config)
+          .then(function (response) {
+            return response.data.results;
+          })
+          .then((data) => {
+            const results = data.map((el) => {
+                return {
+                    place_name: el.name,
+                    address: el.formatted_address
+                }
+            })
+            res.locals.searchResults = results;
+            console.log('results --> ', results)
+            return next();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          
         }
 
-        const formattedCategories = format(categories)
-        const formattedNeighborhoods = format(neighborhoods)
-
-        const selectResults = `SELECT place_name, category, address, neighborhood FROM places WHERE category IN ${formattedCategories} AND neighborhood IN ${formattedNeighborhoods}`
-
-        const results = await db.query(selectResults);
-        res.locals.searchResults = results.rows;
-        return next();
-    }
     catch(err) {
         err = {
             log: 'There was an error in the placesController.getResults middleware' + err,
