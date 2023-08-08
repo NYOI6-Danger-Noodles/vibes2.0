@@ -19,21 +19,22 @@ router.post('/login', userController.login, (req, res, next) => {
 
 // populate beenList handler, add middleware for querying mongo for beenList and SQL for location names
 router.post('/beenList', userController.beenList, (req, res) => {
-  res.status(200).json({beenList: res.locals.beenList})
+  res.status(200).json({ beenList: res.locals.beenList });
 });
 
 router.post('/savedList', userController.savedList, (req, res) => {
-  res.status(200).json({savedList: res.locals.savedList})
-})
+  res.status(200).json({ savedList: res.locals.savedList });
+});
 
 //populate results from user initiated search
 router.post('/placeSearch', placesController.getResults, (req, res) => {
-  res.status(200).json(res.locals.searchResults);
-})
+  res
+    .status(200)
+    .json({ searchResults: res.locals.searchResults, photo: res.locals.photo });
+});
 
 //populate tags for searchList
 // router.get('/searchTags')
-
 
 // to add global error handler in server.js later
 

@@ -63,8 +63,8 @@ const UserPage = ({ username }) => {
   return (
     <div>
       {/* add a button to navigate to the search page */}
-      <div className='lists'>
-        <table className='SavedTable'>
+      <div className="lists">
+        <table className="SavedTable">
           <thead>
             <tr>
               <h4>Saved Spots!</h4>
@@ -89,12 +89,18 @@ const UserPage = ({ username }) => {
             </tr>
           </tbody>
         </table>
-        <table className='BeenTable'>
+        <table className="BeenTable">
           <thead>
             <tr>
-              <th><h4>Where You've Been</h4></th>
-              <th><h4>Rating</h4></th>
-              <th><h4>Tags</h4></th>
+              <th>
+                <h4>Where You've Been</h4>
+              </th>
+              <th>
+                <h4>Rating</h4>
+              </th>
+              <th>
+                <h4>Tags</h4>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -126,8 +132,10 @@ const UserPage = ({ username }) => {
           </tbody>
         </table>
       </div>
-      <div className='searchButton'>
-        <button className='button' onClick={() => navigate('/search')}>Go to Search Page</button>
+      <div className="searchButton">
+        <button className="button" onClick={() => navigate('/search')}>
+          Go to Search Page
+        </button>
       </div>
     </div>
   );

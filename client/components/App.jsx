@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Routes, // use Routes instead of Switch
   Route,
   Navigate,
@@ -14,10 +14,10 @@ const App = () => {
   const [username, setUsername] = useState('');
 
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route
-          path='/login-signup'
+          path="/login-signup"
           element={
             !isLoggedIn ? (
               <LoginSignup
@@ -25,25 +25,25 @@ const App = () => {
                 setUser={(name) => setUsername(name)}
               />
             ) : (
-              <Navigate to='/user' replace />
+              <Navigate to="/user" replace />
             )
           }
         />
         <Route
-          path='/user'
+          path="/user"
           element={
             isLoggedIn ? (
               <UserPage username={username} />
             ) : (
-              <Navigate to='/login-signup' replace />
+              <Navigate to="/login-signup" replace />
             )
           }
         />
         {/* add the route for SearchPage */}
-        <Route path='/search' element={<SearchPage />} />{' '}
-        <Route path='*' element={<Navigate to='/login-signup' replace />} />
+        <Route path="/search" element={<SearchPage />} />{' '}
+        <Route path="*" element={<Navigate to="/login-signup" replace />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 
