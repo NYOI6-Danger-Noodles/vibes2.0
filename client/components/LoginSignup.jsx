@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // replaced useHistory with useNavigate as useHistory is deprecated
+import { Navigate } from 'react-router-dom';
 
 const LoginSignup = ({ onLogin, setUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [verified, setVerified] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate(); // replaced history with navigate
+
+  const verifyUser = async () => {
+    const res = await fetch('/api/verifyUser');
+    console.log('hit');
+    const bool = await res.json();
+    // console.log(bool);
+    if (bool === 'true') {
+      // console.log(bool);
+      onLogin();
+      // navigate('/user');
+    }
+  };
+
+  useEffect(() => {
+    verifyUser();
+  }, []);
 
   const login = async (event) => {
     event.preventDefault();
@@ -20,7 +38,8 @@ const LoginSignup = ({ onLogin, setUser }) => {
       if (response.status === 200) {
         onLogin();
         setUser(username);
-        navigate('/user'); // updated history.push with navigate
+        // updated history.push with navigate
+        navigate('/user');
       } else {
         setError('Invalid credentials');
       }
@@ -39,7 +58,7 @@ const LoginSignup = ({ onLogin, setUser }) => {
 
     try {
       await axios.post('api/signup', { username, password });
-      setError('Signup successful. Please login.');
+      onLogin();
     } catch (err) {
       setError('Signup failed. Username might already be in use.');
       console.error(err);

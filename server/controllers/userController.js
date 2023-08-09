@@ -51,7 +51,7 @@ const UserController = {
   //getting saved list from mongo
   savedList: async (req, res, next) => {
     try {
-      const { username } = req.body;
+      const { username, placeData } = req.body;
       const user = await User.findOne({ username: username });
 
       if (!user) {
@@ -60,23 +60,10 @@ const UserController = {
         );
         return next(err);
       }
-
       //get savedList from user, should be an array of IDs
-      const { savedList } = user;
-
-      const namedSavedList = await savedList.map((placeObj) => {
-        const name = db.query(
-          `SELECT name FROM Users where userID = ${placeObj.locationID}`
-        );
-        return {
-          name: name,
-          score: placeObj.score,
-          tags: placeObj.tags,
-        };
-      });
-
-      res.locals.savedList = namedSavedList;
-
+      user.savedList.push(placeData);
+      res.locals.savedList = user.savedList;
+      await user.save();
       return next();
     } catch (error) {
       const err = new Error('Error in UserController.login: ' + error.message);
@@ -86,8 +73,8 @@ const UserController = {
 
   beenList: async (req, res, next) => {
     try {
-      const { username } = req.body;
-      const user = await User.findOne({ username: username });
+      const { username, placeData } = req.body;
+      const user = await User.findOne({ username });
 
       if (!user) {
         const err = new Error(
@@ -97,13 +84,9 @@ const UserController = {
       }
 
       //get beenList from user, should be an array of IDs
-      const { beenList } = user;
-
-      const namedList = await savedList.map((placeID) =>
-        db.query(`SELECT name FROM Users where userID = ${placeID}`)
-      );
-
-      res.locals.beenList = namedList;
+      user.beenList.push(placeData);
+      res.locals.beenList = user.beenList;
+      await user.save();
 
       return next();
     } catch (error) {

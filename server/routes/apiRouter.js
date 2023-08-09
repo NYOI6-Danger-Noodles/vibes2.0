@@ -48,6 +48,10 @@ router.post('/placeSearch', placesController.getResults, (req, res) => {
   });
 });
 
+router.get('/verifyUser', sessionController.verifyUser, (req, res) => {
+  return res.status(200).json(false);
+});
+
 //populate tags for searchList
 // router.get('/searchTags')
 
