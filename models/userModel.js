@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 require('dotenv').config();
 console.log(`Hello ${process.env}`);
@@ -34,4 +35,17 @@ const userSchema = new Schema({
   password: { type: String, required: true },
 });
 
-module.exports = mongoose.model('User', userSchema);
+userSchema.pre('save', async function (next) {
+  this.password = await bcrypt.hash(this.password, 10);
+});
+
+const User = mongoose.model('User', userSchema);
+
+const sessionSchema = new Schema({
+  cookieId: { type: String, required: true, unique: true },
+  createdAt: { type: Date, expires: 60 * 60 * 24 * 7, default: Date.now },
+});
+
+const Session = mongoose.model('Session', sessionSchema);
+
+module.exports = { User, Session };
