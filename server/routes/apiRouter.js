@@ -52,5 +52,6 @@ router.post('/placeSearch', placesController.getResults, (req, res) => {
 // router.get('/searchTags')
 
 // to add global error handler in server.js later
+// if homepage loads, check if user has a session. if not, redirect to login page
 
 module.exports = router;
