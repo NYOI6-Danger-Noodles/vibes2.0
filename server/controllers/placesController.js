@@ -1,5 +1,6 @@
 const db = require('../../models/placesModel');
 const axios = require('axios');
+const { User } = require('../../models/userModel');
 
 const placesController = {};
 
@@ -31,10 +32,15 @@ placesController.getResults = async (req, res, next) => {
     const formatted_res = response.data.results;
     console.log(formatted_res);
     const results = formatted_res.map((el) => {
-      const photo = el.photos[0].photo_reference
-        ? el.photos[0].photo_reference
-        : 'AUacShjZLaPlKPAfONNiOSt2LHqncrwKmalEyo-yx1DuXJNk12JNoNMS9mQxeyxwgN38ZDJqoSVOStEJMYtbwOLfAPPEvX_CvBzTvgZMMsmJTM_4rCShmpr9aZ1RfAEmsYFrNL6l1YoPHrsHzA0tamLd1EqI8xLeVjLpaw8sQH';
-      console.log(photo);
+      let photo =
+        'AUacShg2C9Difnc5iXjTnDDv4wEImMj6quwVjsXbKCXcR8Rvt59POXMdMS-Ym3pmn061GyhG1XV6d2PMHTlKdxKOQIqRfrKRx0mqiqtzUbM6mwO3ih3NEw3J1SAafAi-nskFC4lymkxvYKnmCliG1oEW5vtAbtfM1rUm_6peD6T-n-JDn8_e';
+      if (!el.photos) {
+        console.log('No photo present');
+      } else {
+        console.log(el.photos[0].photo_reference);
+        photo = el.photos[0].photo_reference;
+      }
+
       return {
         place_name: el.name,
         address: el.formatted_address,
@@ -49,6 +55,33 @@ placesController.getResults = async (req, res, next) => {
       log:
         'There was an error in the placesController.getResults middleware' +
         err,
+      status: 500,
+      message: { err: 'There was an unknown server error' },
+    };
+    return next(err);
+  }
+};
+
+placesController.getSavedPlaces = async (req, res, next) => {
+  try {
+    const { ssid } = req.cookies;
+    console.log(ssid);
+    const user = await User.findOne({ _id: ssid });
+    console.log(user);
+
+    if (!user) {
+      const err = new Error(
+        'Error in placesController.getSavedPlaces: User not found'
+      );
+      return next(err);
+    }
+    //get savedList from user, should be an array of IDs
+    res.locals.savedPlaces = user.savedList;
+
+    return next();
+  } catch (err) {
+    err = {
+      log: 'Error getting new SavedList' + err,
       status: 500,
       message: { err: 'There was an unknown server error' },
     };

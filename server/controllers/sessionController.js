@@ -6,7 +6,6 @@ const sessionController = {};
 
 //Starts a user session by addind ssid to sessions store
 sessionController.startSession = async (req, res, next) => {
-  console.log(res.locals.ssid);
   try {
     if (res.locals.ssid) {
       console.log('hit');
@@ -28,7 +27,6 @@ sessionController.startSession = async (req, res, next) => {
 sessionController.verifyUser = async (req, res, next) => {
   try {
     const { ssid } = req.cookies;
-    console.log(ssid);
 
     const session = await Session.findOne({ cookieId: ssid });
     if (session) {

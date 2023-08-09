@@ -51,7 +51,7 @@ const UserController = {
   //getting saved list from mongo
   savedList: async (req, res, next) => {
     try {
-      console.log(req.body);
+      // console.log(req.body);
       const id = req.cookies.ssid;
       const user = await User.findOne({ _id: id });
 

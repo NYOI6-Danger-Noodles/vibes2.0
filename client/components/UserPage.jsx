@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'; // import useNavigate
 import RatedPlaceList from './RatedPlacesList.jsx';
 import SavedPlaceList from './SavedPlaceList.jsx';
 
-//updating the listsLists to have to be components
+//updating the listsLists to have to be components that we toggle
+//
 
 const UserPage = ({ username }) => {
   const navigate = useNavigate(); // Use the useNavigate hook
@@ -14,11 +15,12 @@ const UserPage = ({ username }) => {
   const getSaved = async () => {
     try {
       //query userRouters/saved with username in body
-      const response = await axios.post('/api/savedList', { username });
+      const response = await axios.get('/api/savedList');
       //server should return an array of saved places already queried for name
       if (response.status === 200) {
         //check if it's in response.data!!
-        setSavedList(response.data.savedList);
+        console.log(response.data);
+        setSavedList(response.data);
       }
     } catch (err) {
       console.error(err);
@@ -27,7 +29,7 @@ const UserPage = ({ username }) => {
   const getTrys = async () => {
     try {
       //query userRouter/tried with username in body
-      const response = await axios.post('/api/beenList', { username });
+      const response = await axios.get('/api/beenList', { username });
       //server should return an array of objects
       if (response.status === 200) {
         //check if it's in response.data!
@@ -64,7 +66,11 @@ const UserPage = ({ username }) => {
           Rated Places
         </button>
       </div>
-      {toggleView ? <RatedPlaceList /> : <SavedPlaceList />}
+      {toggleView ? (
+        <RatedPlaceList />
+      ) : (
+        <SavedPlaceList savedList={savedList} />
+      )}
       <div className="searchButton">
         <button className="button" onClick={() => navigate('/search')}>
           Go to Search Page
