@@ -51,8 +51,9 @@ const UserController = {
   //getting saved list from mongo
   savedList: async (req, res, next) => {
     try {
-      const { username, placeData } = req.body;
-      const user = await User.findOne({ username: username });
+      // console.log(req.body);
+      const id = req.cookies.ssid;
+      const user = await User.findOne({ _id: id });
 
       if (!user) {
         const err = new Error(
@@ -61,7 +62,7 @@ const UserController = {
         return next(err);
       }
       //get savedList from user, should be an array of IDs
-      user.savedList.push(placeData);
+      user.savedList.push(req.body);
       res.locals.savedList = user.savedList;
       await user.save();
       return next();
@@ -73,7 +74,7 @@ const UserController = {
 
   beenList: async (req, res, next) => {
     try {
-      const { username, placeData } = req.body;
+      const { username } = req.body;
       const user = await User.findOne({ username });
 
       if (!user) {
@@ -84,7 +85,7 @@ const UserController = {
       }
 
       //get beenList from user, should be an array of IDs
-      user.beenList.push(placeData);
+      // user.beenList.push(placeData);
       res.locals.beenList = user.beenList;
       await user.save();
 

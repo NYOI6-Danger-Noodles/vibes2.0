@@ -29,10 +29,11 @@ const ratedlocationSchema = new Schema({
 });
 
 const savedlocationSchema = new Schema({
-  locationID: { type: String, required: true },
+  neighborhood: { type: String, required: true },
   address: { type: String, requried: true },
   name: { type: String, required: true },
   photo: { type: String, required: true },
+  category: { type: String, required: true },
 });
 
 const userSchema = new Schema({

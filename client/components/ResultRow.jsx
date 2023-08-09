@@ -1,11 +1,32 @@
 import React from 'react';
+import { useState, createContext, useContext } from 'react';
 
 const ResultRow = (props) => {
   const { place_name, category, address, neighborhood, photo } = props.result;
-  console.log(photo);
-  const { categories, image } = props;
+
+  const { categories, image, username, neighborhoods } = props;
 
   // add function that calls an endpoint to save the place
+
+  //DN: removing hard coded "vibes", adding functionality to save the location details
+  // along with the input of categories and neighborhood
+  const saveToDB = async () => {
+    const data = {
+      address,
+      name: place_name,
+      category: categories[0],
+      neighborhood: neighborhoods[0],
+      photo: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo}&key=AIzaSyCcPpO8Oh7OERkSYaJMpHfRpkoNemUV73s`,
+    };
+    console.log(data);
+    const res = await fetch('/api/savedList', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+  };
 
   return (
     <div className="card w-96 bg-base-500 shadow-xl">
@@ -23,7 +44,9 @@ const ResultRow = (props) => {
           <div className="badge badge-outline">{categories}</div>
         </div>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Save</button>
+          <button onClick={(e) => saveToDB(e)} className="btn btn-primary">
+            Save
+          </button>
         </div>
       </div>
     </div>
