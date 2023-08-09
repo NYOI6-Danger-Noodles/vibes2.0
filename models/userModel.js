@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 require('dotenv').config();
 console.log(`Hello ${process.env}`);
 
-const MONGO_URI = `mongodb+srv://${process.env.MDBLOGIN}:${process.env.MDBPWD}@cluster0.jpkjx8d.mongodb.net/?retryWrites=true&w=majority`;
+const MONGO_URI = `mongodb+srv://${process.env.MDBLOGIN}:${process.env.MDBPWD}${process.env.LINK}`;
 
 //contains a User collection
 
@@ -19,24 +19,39 @@ mongoose
   .then(() => console.log('Connected to Scratch DB!'))
   .catch((err) => console.log(err));
 
-const locationSchema = new Schema({
-  locationID: { type: String },
-  score: { type: Number },
+const ratedlocationSchema = new Schema({
+  locationID: { type: String, required: true },
+  address: { type: String, requried: true },
+  name: { type: String, required: true },
+  score: { type: Number, required: true },
+  photo: { type: String, required: true },
   tags: [{ type: String }],
+});
+
+const savedlocationSchema = new Schema({
+  locationID: { type: String, required: true },
+  address: { type: String, requried: true },
+  name: { type: String, required: true },
+  photo: { type: String, required: true },
 });
 
 const userSchema = new Schema({
   firstName: { type: String },
   lastName: { type: String },
-  beenList: [locationSchema],
-  savedList: [{ type: String }],
+  beenList: [ratedlocationSchema],
+  savedList: [savedlocationSchema],
   friendList: [{ type: String }],
+  hashed: { type: Boolean, default: false },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
 
 userSchema.pre('save', async function (next) {
-  this.password = await bcrypt.hash(this.password, 10);
+  if (!this.hashed) {
+    this.hashed = true;
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
 });
 
 const User = mongoose.model('User', userSchema);
