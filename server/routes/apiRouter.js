@@ -28,9 +28,10 @@ router.post('/savedList', userController.savedList, (req, res) => {
 
 //populate results from user initiated search
 router.post('/placeSearch', placesController.getResults, (req, res) => {
-  res
-    .status(200)
-    .json({ searchResults: res.locals.searchResults, photo: res.locals.photo });
+  res.status(200).json({
+    searchResults: res.locals.searchResults,
+    imgSrc: res.locals.src,
+  });
 });
 
 //populate tags for searchList

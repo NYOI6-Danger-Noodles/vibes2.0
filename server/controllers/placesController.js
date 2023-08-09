@@ -21,17 +21,16 @@ placesController.getResults = async (req, res, next) => {
     console.log('reached controller');
 
     //make call to goole api
-    const res = await axios(config);
+    const resonse = await axios(config);
 
-    const formatted_res = res.data.results;
-    // console.log(formatted_res);
+    const formatted_res = resonse.data.results;
     const results = formatted_res.map((el) => {
       return {
         place_name: el.name,
         address: el.formatted_address,
+        photo: el.photos[0].photo_reference,
       };
     });
-
     res.locals.searchResults = results;
 
     return next();
@@ -48,24 +47,3 @@ placesController.getResults = async (req, res, next) => {
 };
 
 module.exports = placesController;
-
-// formatted_res.forEach((el) => {
-//   console.log('hel');
-//   const photoParams = new URLSearchParams({
-//     maxwidth: 400,
-//     photo_reference: el.photos[0].photo_reference,
-//     key: 'AIzaSyCcPpO8Oh7OERkSYaJMpHfRpkoNemUV73s',
-//   });
-//   console.log(photoParams);
-//   console.log('hello');
-
-//   const configForPhoto = {
-//     method: 'get',
-//     url: 'https://maps.googleapis.com/maps/api/place/photo?' + photoParams,
-//     headers: {},
-//   };
-
-//   axios(configForPhoto).then((data) => {
-//     res.locals.photos.push(photoRes);
-//   });
-// });

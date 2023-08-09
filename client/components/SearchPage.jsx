@@ -7,7 +7,6 @@ const SearchPage = () => {
   const [neighborhoods, setNeighborhoods] = useState([]);
   // const [tags, setTags] = useState([]);
   const [results, setResults] = useState([]);
-  const [images, setimages] = useState('');
   const rows = [];
 
   const handleChange = (selectedOptions, actionMeta) => {
@@ -37,8 +36,8 @@ const SearchPage = () => {
     })
       .then((response) => response.json())
       .then((output) => {
+        console.log(output);
         setResults(output.searchResults);
-        setimages(output.photo);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -114,14 +113,9 @@ const SearchPage = () => {
                     <ReactSelect name='tags' options={tagOptions} value={tags.map(value => ({ value, label: value }))} onChange={handleChange} isMulti/> */}
         <button onClick={querySQL}>Find!</button>
       </div>
-      <div className="ml-5 grid grid-cols-4 gap-1">
+      <div className="w-fit grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-center gap-x-10 gap-y-10  mx-auto ">
         {results.map((result, index) => (
-          <ResultRow
-            key={index}
-            result={result}
-            images={images}
-            categories={categories}
-          />
+          <ResultRow key={index} result={result} categories={categories} />
         ))}
       </div>
     </div>
