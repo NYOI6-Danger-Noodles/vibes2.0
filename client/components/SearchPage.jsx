@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactSelect from 'react-select';
 import ResultRow from './ResultRow.jsx';
 
-const SearchPage = () => {
+const SearchPage = ({ username }) => {
   const [categories, setCategories] = useState([]);
   const [neighborhoods, setNeighborhoods] = useState([]);
   // const [tags, setTags] = useState([]);
@@ -115,7 +115,13 @@ const SearchPage = () => {
       </div>
       <div className="w-fit grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-center gap-x-10 gap-y-10  mx-auto ">
         {results.map((result, index) => (
-          <ResultRow key={index} result={result} categories={categories} />
+          <ResultRow
+            key={index}
+            result={result}
+            username={username}
+            categories={categories}
+            neighborhoods={neighborhoods}
+          />
         ))}
       </div>
     </div>
