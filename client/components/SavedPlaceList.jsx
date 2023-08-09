@@ -10,6 +10,9 @@ const SavedPlaceList = ({ savedList }) => {
         <td>{el.name}</td>
         <td>{el.neighborhood}</td>
         <td>{el.category}</td>
+        <td>
+          <button className="btn btn-primary h-10 w-10">Rate</button>
+        </td>
       </tr>
     );
   });
