@@ -18,7 +18,7 @@ const ResultRow = (props) => {
       neighborhood: neighborhoods[0],
       photo: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photo}&key=AIzaSyCcPpO8Oh7OERkSYaJMpHfRpkoNemUV73s`,
     };
-    console.log(data);
+    // console.log(data);
     const res = await fetch('/api/savedList', {
       method: 'POST',
       headers: {

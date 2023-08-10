@@ -6,25 +6,9 @@ import { Navigate } from 'react-router-dom';
 const LoginSignup = ({ onLogin, setUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [verified, setVerified] = useState(false);
+
   const [error, setError] = useState(null);
   const navigate = useNavigate(); // replaced history with navigate
-
-  const verifyUser = async () => {
-    const res = await fetch('/api/verifyUser');
-    console.log('hit');
-    const bool = await res.json();
-    // console.log(bool);
-    if (bool === 'true') {
-      // console.log(bool);
-      onLogin();
-      // navigate('/user');
-    }
-  };
-
-  useEffect(() => {
-    verifyUser();
-  }, []);
 
   const login = async (event) => {
     event.preventDefault();

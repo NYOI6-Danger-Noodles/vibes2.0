@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter,
   Routes, // use Routes instead of Switch
@@ -12,6 +12,22 @@ import SearchPage from './SearchPage.jsx'; // import the SearchPage
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [verified, setVerified] = useState(false);
+
+  // useEffect(() => {
+  //   verifyUser();
+  // }, []);
+
+  const verifyUser = async () => {
+    const res = await fetch('/api/verifyUser');
+    // console.log('hit');
+    const bool = await res.json();
+    // console.log(bool);
+    if (bool === 'true') {
+      setIsLoggedIn(true);
+      setVerified(true);
+    }
+  };
   return (
     <BrowserRouter>
       <Routes>
@@ -28,16 +44,7 @@ const App = () => {
             )
           }
         />
-        <Route
-          path="/user"
-          element={
-            isLoggedIn ? (
-              <UserPage username={username} />
-            ) : (
-              <Navigate to="/login-signup" replace />
-            )
-          }
-        />
+        <Route path="/user" element={<UserPage username={username} />} />
         {/* add the route for SearchPage */}
         <Route
           path="/search"

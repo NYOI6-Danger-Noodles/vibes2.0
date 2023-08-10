@@ -23,14 +23,14 @@ sessionController.startSession = async (req, res, next) => {
   }
 };
 
-//Makes sure user has valid permissions to be on pagee
+//Makes sure user has valid permissions to be on page
 sessionController.verifyUser = async (req, res, next) => {
   try {
     const { ssid } = req.cookies;
 
     const session = await Session.findOne({ cookieId: ssid });
     if (session) {
-      return res.status(200).json('true');
+      return next();
     } else {
       return next();
     }

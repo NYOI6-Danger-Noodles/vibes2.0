@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import ListComponent from './ListComponent.jsx';
 
 const SavedPlaceList = ({ savedList }) => {
-  const [savedPlaces, setSavedplaces] = useState([]);
-  const savedPlaceList = savedList.map((el, index) => {
-    console.log(el);
-    return (
-      <tr>
-        <th>{index + 1}</th>
-        <td>{el.name}</td>
-        <td>{el.neighborhood}</td>
-        <td>{el.category}</td>
-        <td>
-          <button className="btn btn-primary h-10 w-10">Rate</button>
-        </td>
-      </tr>
-    );
+  // console.log(savedList);
+  const ListComp = savedList.map((el, index) => {
+    return <ListComponent data={el} index={index} />;
   });
+
   return (
     <div className="overflow-x-auto">
       <table className="table table-zebra">
@@ -30,7 +21,7 @@ const SavedPlaceList = ({ savedList }) => {
         </thead>
         <tbody>
           {/* row 1 */}
-          {savedPlaceList}
+          {ListComp}
         </tbody>
       </table>
     </div>
@@ -38,3 +29,18 @@ const SavedPlaceList = ({ savedList }) => {
 };
 
 export default SavedPlaceList;
+
+{
+  /* <button
+onClick={(e) =>
+  savedRatedDB({
+    name: el.name,
+    neighborhood: el.neighborhood,
+    category: el.category,
+  })
+}
+className="btn btn-primary h-10 w-10"
+>
+Rate
+</button> */
+}
