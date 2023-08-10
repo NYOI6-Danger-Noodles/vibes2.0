@@ -37,7 +37,7 @@ const UserPage = ({ username }) => {
       });
 
       const formatted_res = await response.json();
-      console.log(formatted_res);
+      // console.log(formatted_res);
       //server should return an array of objects
 
       //check if it's in response.data!
@@ -57,12 +57,12 @@ const UserPage = ({ username }) => {
     <div>
       {/* add a button to navigate to the search page */}
       <NavBar />
-      <div className="flex gap-4 place-content-center mb-5">
+      <div className='flex gap-4 place-content-center mb-5'>
         <button
           onClick={(e) => {
             setToggleView(false);
           }}
-          className="btn btn-primary"
+          className='btn bg-fuchsia-500 hover:bg-violet-500 text-white'
         >
           Saved Places
         </button>
@@ -70,7 +70,7 @@ const UserPage = ({ username }) => {
           onClick={(e) => {
             setToggleView(true);
           }}
-          className="btn btn-primary"
+          className='btn bg-fuchsia-500 hover:bg-violet-500 text-white text-l'
         >
           Rated Places
         </button>
@@ -80,8 +80,8 @@ const UserPage = ({ username }) => {
       ) : (
         <SavedPlaceList savedList={savedList} />
       )}
-      <div className="searchButton">
-        <button className="button" onClick={() => navigate('/search')}>
+      <div className='btn h-14 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-screen mt-5 py-2 place-content-center mx-auto h-5 rounded-full text-white'>
+        <button className='button text-2xl' onClick={() => navigate('/search')}>
           Go to Search Page
         </button>
       </div>

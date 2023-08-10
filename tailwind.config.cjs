@@ -3,10 +3,16 @@ module.exports = {
   content: ['./build/*.html', './client/**/*.{js,jsx}', './index.html'],
   daisyui: {
     themes: ['light', 'aquatic'],
+    theme: {
+      fontfamily: {
+        Caprasimo: ['Caprasimo'],
+      },
+    },
   },
-  // content: [
-  //   'node_modules/daisyui/dist/**/*.js',
-  //   'node_modules/react-daisyui/dist/**/*.js',
-  // ],
-  plugins: [require('daisyui')],
+  plugins: [
+    require('daisyui'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
 };

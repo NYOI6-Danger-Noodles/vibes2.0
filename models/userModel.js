@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 require('dotenv').config();
-console.log(`Hello ${process.env}`);
+// console.log(`Hello ${process.env}`);
 
 const MONGO_URI = `mongodb+srv://${process.env.MDBLOGIN}:${process.env.MDBPWD}${process.env.LINK}`;
 

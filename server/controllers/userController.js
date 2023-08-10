@@ -74,7 +74,7 @@ const UserController = {
 
   beenList: async (req, res, next) => {
     try {
-      console.log(req.body);
+      // console.log(req.body);
       const { ssid } = req.cookies;
       const user = await User.findOne({ _id: ssid });
 

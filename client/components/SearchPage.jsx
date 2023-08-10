@@ -93,12 +93,11 @@ const SearchPage = ({ username }) => {
   return (
     <>
       <NavBar />
-      <div className="searchContainer">
-        <h1>Guide</h1>
-        <div className="filterBar">
+      <div className='text-xl mx-2 flex flex-col content-center'>
+        <div className='filterBar'>
           <label>Category</label>
           <ReactSelect
-            name="categories"
+            name='categories'
             options={categoriesOptions}
             value={categories.map((value) => ({ value, label: value }))}
             onChange={handleChange}
@@ -106,7 +105,7 @@ const SearchPage = ({ username }) => {
           />
           <label>Neighborhood</label>
           <ReactSelect
-            name="neighborhoods"
+            name='neighborhoods'
             options={neighborhoodOptions}
             value={neighborhoods.map((value) => ({ value, label: value }))}
             onChange={handleChange}
@@ -114,9 +113,14 @@ const SearchPage = ({ username }) => {
           />
           {/* <label>Tags</label>
                     <ReactSelect name='tags' options={tagOptions} value={tags.map(value => ({ value, label: value }))} onChange={handleChange} isMulti/> */}
-          <button onClick={querySQL}>Find!</button>
+          <button
+            onClick={querySQL}
+            className='btn h-14 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-full mt-5 ml-auto h-5 place-content-center rounded-full text-white mb-5'
+          >
+            Find!
+          </button>
         </div>
-        <div className="w-fit grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-center gap-x-10 gap-y-10  mx-auto ">
+        <div className='w-fit grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-center gap-x-10 gap-y-10  mx-auto '>
           {results.map((result, index) => (
             <ResultRow
               key={index}

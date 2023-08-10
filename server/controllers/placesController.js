@@ -7,7 +7,7 @@ const placesController = {};
 placesController.getResults = async (req, res, next) => {
   try {
     const { categories, neighborhoods } = req.body;
-    console.log(categories);
+    // console.log(categories);
     const params = new URLSearchParams({
       query: `${categories[0]}s in ${neighborhoods[0]}, NY`,
       key: 'AIzaSyCcPpO8Oh7OERkSYaJMpHfRpkoNemUV73s',
@@ -30,7 +30,7 @@ placesController.getResults = async (req, res, next) => {
     const response = await axios(config);
 
     const formatted_res = response.data.results;
-    console.log(formatted_res);
+    // console.log(formatted_res);
     const results = formatted_res.map((el) => {
       let photo =
         'AUacShg2C9Difnc5iXjTnDDv4wEImMj6quwVjsXbKCXcR8Rvt59POXMdMS-Ym3pmn061GyhG1XV6d2PMHTlKdxKOQIqRfrKRx0mqiqtzUbM6mwO3ih3NEw3J1SAafAi-nskFC4lymkxvYKnmCliG1oEW5vtAbtfM1rUm_6peD6T-n-JDn8_e';
@@ -101,7 +101,7 @@ placesController.getBeenPlaces = async (req, res, next) => {
     }
 
     res.locals.beenPlaces = user.beenList;
-    console.log(res.locals.beenPlaces);
+    // console.log(res.locals.beenPlaces);
     return next();
   } catch (err) {
     return next({
