@@ -29,7 +29,7 @@ const LoginSignup = ({ onLogin, setUser }) => {
       }
     } catch (err) {
       setError('Invalid credentials');
-      console.error(err);
+      // console.error(err);
     }
   };
 
@@ -50,41 +50,43 @@ const LoginSignup = ({ onLogin, setUser }) => {
   };
 
   return (
-    <div className="coolGradient">
-      <h1 className="text-5xl w-min mx-auto mt-48 mb-5">VIBE</h1>
-      <form className="signup-container">
-        <div className="signup-card">
-          <div className="w-screen flex flex-col gap-y-4 ">
+    <div className='h-screen bg-gradient-to-r from-cyan-500 to-blue-500'>
+      <h1 className=' font-Caprasimo italic text-center text-8xl text-white min-w-full py-48 py-auto'>
+        VIBE 2.0
+      </h1>
+      <form className='signup-container'>
+        <div className='signup-card'>
+          <div className='w-screen flex flex-col gap-y-4 '>
             <input
-              type="text"
-              className="border border-4 w-1/2 bg-white p-2 mx-auto rounded-full"
+              type='text'
+              className='border border-2 w-1/4 bg-white p-2 mx-auto rounded-full'
               value={username}
-              placeholder="Username"
+              placeholder='Username'
               onChange={(e) => setUsername(e.target.value)}
             />
 
             <input
-              type="password"
-              className="border border-4 w-1/2 p-2 bg-white mx-auto rounded-full"
-              placeholder="Password"
+              type='password'
+              className='border border-2 w-1/4 p-2 bg-white mb-4 mx-auto rounded-full'
+              placeholder='Password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
 
             <button
-              className="btn btn-primary w-1/4 py-2 mx-auto"
+              className='btn h-14 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-1/6 py-2 mx-auto h-5 rounded-full'
               onClick={login}
             >
               Login
             </button>
             <button
-              className="btn btn-primary w-1/4 py-2 mx-auto"
+              className='btn h-14 bg-gradient-to-r from-purple-500 to-pink-500 w-1/6 py-2 mx-auto h-5 rounded-full'
               onClick={signup}
             >
               Sign Up
             </button>
           </div>
-          {error && <p className="errmessage">{error}</p>}
+          {error && <p className='errmessage'>{error}</p>}
         </div>
       </form>
     </div>

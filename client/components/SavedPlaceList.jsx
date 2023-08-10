@@ -8,18 +8,18 @@ const SavedPlaceList = ({ savedList }) => {
   });
 
   return (
-    <div className="overflow-x-auto">
-      <table className="table table-zebra">
+    <div className='overflow-x-auto'>
+      <table className='table table-zebra'>
         {/* head */}
-        <thead>
-          <tr>
+        <thead className='border-b-4'>
+          <tr className='text-xl'>
             <th></th>
             <th>Name</th>
             <th>Neighborhood</th>
             <th>Category</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='text-xl'>
           {/* row 1 */}
           {ListComp}
         </tbody>
