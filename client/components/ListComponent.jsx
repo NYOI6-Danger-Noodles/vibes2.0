@@ -2,18 +2,29 @@ import React, { useEffect, useState } from 'react';
 import ReactSelect from 'react-select';
 
 const ListComponent = ({ data, index }) => {
-  const fish = data;
-  console.log(fish);
+  // console.log(data);
   const [tags, setTags] = useState([]);
   const [ratings, setRatings] = useState(0);
-
+  const id = `my_modal_${index}`;
   const savedRatesDB = async () => {
+    console.log(data);
+    const info = {
+      name: data.name,
+      address: data.address,
+      neighborhood: data.neighborhood,
+      category: data.category,
+      photo: data.photo,
+      tags,
+      score: ratings,
+    };
+
+    console.log(info);
     const res = await fetch('/api/beenList', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(fish),
+      body: JSON.stringify(info),
     });
   };
   const handleChange = (selectedOptions, actionMeta) => {
@@ -50,12 +61,12 @@ const ListComponent = ({ data, index }) => {
         <button
           className="btn"
           onClick={() => {
-            document.querySelector('#my_modal_3').showModal();
+            document.querySelector('#' + id).showModal();
           }}
         >
           Rate
         </button>
-        <dialog id="my_modal_3" className="modal">
+        <dialog id={id} className="modal">
           <form method="dialog" className="modal-box h-96">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 overflow-y-hidden">
               ✕

@@ -12,6 +12,7 @@ const RatedPlaceList = ({ beenList }) => {
         </figure>
         <div className="card-body">
           <h2 className="card-title">{el.name}</h2>
+          <p>Rating: {el.score}</p>
           <p>{el.address}</p>
           <div className="card-actions justify-start">
             <div className="badge badge-outline">{el.category}</div>
