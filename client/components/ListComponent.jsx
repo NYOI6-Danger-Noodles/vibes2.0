@@ -1,11 +1,18 @@
+import { set } from 'mongoose';
 import React, { useEffect, useState } from 'react';
 import ReactSelect from 'react-select';
 
-const ListComponent = ({ data, index }) => {
+const ListComponent = ({ data, index, handleRefresh }) => {
   // console.log(data);
   const [tags, setTags] = useState([]);
   const [ratings, setRatings] = useState(0);
+  const [click, setClick] = useState(false);
   const id = `my_modal_${index}`;
+
+  useEffect(() => {
+    console.log('runnnnnnning');
+    handleRefresh();
+  }, [click]);
   const savedRatesDB = async () => {
     // console.log(data);
     const info = {
@@ -59,63 +66,67 @@ const ListComponent = ({ data, index }) => {
       <td>{data.category}</td>
       <td>
         <button
-          className='btn bg-fuchsia-500 hover:bg-violet-500 text-white text-l'
+          className="btn bg-fuchsia-500 hover:bg-violet-500 text-white text-l"
+          id="ratedButton"
           onClick={() => {
             document.querySelector('#' + id).showModal();
           }}
         >
           Rate
         </button>
-        <dialog id={id} className='modal'>
-          <form method='dialog' className='modal-box h-96'>
-            <button className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2 overflow-y-hidden'>
+        <dialog id={id} className="modal">
+          <form method="dialog" className="modal-box h-96">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 overflow-y-hidden">
               ✕
             </button>
-            <h3 className='font-bold text-lg mb-3'>Rate My Vibe!</h3>
+            <h3 className="font-bold text-lg mb-3">Rate My Vibe!</h3>
             <ReactSelect
-              name='tags'
+              name="tags"
               options={tagOptions}
               value={tags.map((value) => ({ value, label: value }))}
               onChange={handleChange}
               isMulti
             />
-            <div className='flex flex-col gap-y-10 mb-3'>
-              <div className='rating rating-lg mt-4'>
+            <div className="flex flex-col gap-y-10 mb-3">
+              <div className="rating rating-lg mt-4">
                 <input
-                  type='radio'
-                  name='rating-1'
-                  className='mask mask-star'
+                  type="radio"
+                  name="rating-1"
+                  className="mask mask-star"
                   onClick={(e) => setRatings(1)}
                 />
                 <input
-                  type='radio'
-                  name='rating-1'
-                  className='mask mask-star'
+                  type="radio"
+                  name="rating-1"
+                  className="mask mask-star"
                   checked
                   onClick={(e) => setRatings(2)}
                 />
                 <input
-                  type='radio'
-                  name='rating-1'
-                  className='mask mask-star'
+                  type="radio"
+                  name="rating-1"
+                  className="mask mask-star"
                   onClick={(e) => setRatings(3)}
                 />
                 <input
-                  type='radio'
-                  name='rating-1'
-                  className='mask mask-star'
+                  type="radio"
+                  name="rating-1"
+                  className="mask mask-star"
                   onClick={(e) => setRatings(4)}
                 />
                 <input
-                  type='radio'
-                  name='rating-1'
-                  className='mask mask-star'
+                  type="radio"
+                  name="rating-1"
+                  className="mask mask-star"
                   onClick={(e) => setRatings(5)}
                 />
               </div>
               <button
-                onClick={(e) => savedRatesDB()}
-                className='btn btn-primary h-10 w-full mt-20 '
+                onClick={(e) => {
+                  savedRatesDB();
+                  setClick(1);
+                }}
+                className="btn btn-primary h-10 w-full mt-20 "
               >
                 Save
               </button>

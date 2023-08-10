@@ -12,7 +12,12 @@ const UserPage = ({ username }) => {
   const navigate = useNavigate(); // Use the useNavigate hook
   const [savedList, setSavedList] = useState([]);
   const [triedList, setTriedList] = useState([]);
+  const [refresh, setRefresh] = useState(0);
   const [toggleView, setToggleView] = useState(false);
+
+  const handleRefresh = () => {
+    setRefresh(refresh + 1);
+  };
   const getSaved = async () => {
     try {
       //query userRouters/saved with username in body
@@ -51,18 +56,18 @@ const UserPage = ({ username }) => {
   useEffect(() => {
     getSaved();
     getTrys();
-  }, []);
+  }, [toggleView, refresh]);
 
   return (
     <div>
       {/* add a button to navigate to the search page */}
       <NavBar />
-      <div className='flex gap-4 place-content-center mb-5'>
+      <div className="flex gap-4 place-content-center mb-5">
         <button
           onClick={(e) => {
             setToggleView(false);
           }}
-          className='btn bg-fuchsia-500 hover:bg-violet-500 text-white'
+          className="btn bg-fuchsia-500 hover:bg-violet-500 text-white"
         >
           Saved Places
         </button>
@@ -70,7 +75,7 @@ const UserPage = ({ username }) => {
           onClick={(e) => {
             setToggleView(true);
           }}
-          className='btn bg-fuchsia-500 hover:bg-violet-500 text-white text-l'
+          className="btn bg-fuchsia-500 hover:bg-violet-500 text-white text-l"
         >
           Rated Places
         </button>
@@ -78,10 +83,10 @@ const UserPage = ({ username }) => {
       {toggleView ? (
         <RatedPlaceList beenList={triedList} />
       ) : (
-        <SavedPlaceList savedList={savedList} />
+        <SavedPlaceList savedList={savedList} handleRefresh={handleRefresh} />
       )}
-      <div className='btn h-14 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-screen mt-5 py-2 place-content-center mx-auto h-5 rounded-full text-white'>
-        <button className='button text-2xl' onClick={() => navigate('/search')}>
+      <div className="btn h-14 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-screen mt-5 py-2 place-content-center mx-auto h-5 rounded-full text-white">
+        <button className="button text-2xl" onClick={() => navigate('/search')}>
           Go to Search Page
         </button>
       </div>

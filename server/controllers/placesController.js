@@ -37,7 +37,7 @@ placesController.getResults = async (req, res, next) => {
       if (!el.photos) {
         console.log('No photo present');
       } else {
-        console.log(el.photos[0].photo_reference);
+        // console.log(el.photos[0].photo_reference);
         photo = el.photos[0].photo_reference;
       }
 
@@ -65,9 +65,9 @@ placesController.getResults = async (req, res, next) => {
 placesController.getSavedPlaces = async (req, res, next) => {
   try {
     const { ssid } = req.cookies;
-    console.log(ssid);
+    // console.log(ssid);
     const user = await User.findOne({ _id: ssid });
-    console.log(user);
+    // console.log(user);
 
     if (!user) {
       const err = new Error(
