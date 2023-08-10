@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, createContext, useContext } from 'react';
 
 const ResultRow = (props) => {
+  const [click, setClick] = useState(false);
   const { place_name, category, address, neighborhood, photo } = props.result;
 
   const { categories, image, username, neighborhoods } = props;
@@ -44,7 +45,17 @@ const ResultRow = (props) => {
           <div className="badge badge-outline">{categories}</div>
         </div>
         <div className="card-actions justify-end">
-          <button onClick={(e) => saveToDB(e)} className="btn btn-primary">
+          <button
+            onClick={(e) => {
+              saveToDB(e);
+              setClick(true);
+            }}
+            className={
+              click
+                ? 'hidden'
+                : 'btn btn-primary focus:outline-none focus:ring focus:ring-green-300'
+            }
+          >
             Save
           </button>
         </div>

@@ -1,6 +1,7 @@
 const { User } = require('../../models/userModel');
 const bcrypt = require('bcryptjs');
 const db = require('../../models/placesModel');
+const { useSearchParams } = require('react-router-dom');
 
 const UserController = {
   // create a new user in the database
@@ -10,7 +11,7 @@ const UserController = {
   signup: async (req, res, next) => {
     try {
       const { username, password } = req.body;
-      console.log(password);
+      // console.log(password);
       const newUser = await User.create({
         username,
         password,
@@ -86,6 +87,23 @@ const UserController = {
       }
 
       //get beenList from user, should be an array of IDs
+      function removeValue(value, index) {
+        // If the value at the current array index matches the specified value (2)
+        if (value.name === req.body.name) {
+          // Removes the value from the original array
+          user.savedList.splice(index, 1);
+          return true;
+        }
+        return false;
+      }
+
+      // Pass the removeValue function into the filter function to return the specified value
+      console.log('before', user.savedList.length);
+      const x = user.savedList.filter(removeValue);
+      console.log('after', user.savedList.length);
+
+      console.log('printint', x);
+
       user.beenList.push(req.body);
       res.locals.beenList = user.beenList;
       await user.save();
