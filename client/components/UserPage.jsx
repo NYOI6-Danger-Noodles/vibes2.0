@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // import useNavigate
 import RatedPlaceList from './RatedPlacesList.jsx';
 import SavedPlaceList from './SavedPlaceList.jsx';
+import NavBar from './NavBar.jsx';
 
 //updating the listsLists to have to be components that we toggle
 //
@@ -19,7 +20,6 @@ const UserPage = ({ username }) => {
       //server should return an array of saved places already queried for name
       if (response.status === 200) {
         //check if it's in response.data!!
-        console.log(response.data);
         setSavedList(response.data);
       }
     } catch (err) {
@@ -29,12 +29,20 @@ const UserPage = ({ username }) => {
   const getTrys = async () => {
     try {
       //query userRouter/tried with username in body
-      const response = await axios.get('/api/beenList', { username });
+      const response = await fetch('/api/beenLists', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+
+      const formatted_res = await response.json();
+      console.log(formatted_res);
       //server should return an array of objects
-      if (response.status === 200) {
-        //check if it's in response.data!
-        setTriedList(response.data);
-      }
+
+      //check if it's in response.data!
+      setTriedList(formatted_res.beenPlaces);
+      // console.log(triedList[0].photo);
     } catch (err) {
       console.error(err);
     }
@@ -48,7 +56,8 @@ const UserPage = ({ username }) => {
   return (
     <div>
       {/* add a button to navigate to the search page */}
-      <div className="flex gap-4 place-content-center">
+      <NavBar />
+      <div className="flex gap-4 place-content-center mb-5">
         <button
           onClick={(e) => {
             setToggleView(false);
@@ -67,7 +76,7 @@ const UserPage = ({ username }) => {
         </button>
       </div>
       {toggleView ? (
-        <RatedPlaceList />
+        <RatedPlaceList beenList={triedList} />
       ) : (
         <SavedPlaceList savedList={savedList} />
       )}

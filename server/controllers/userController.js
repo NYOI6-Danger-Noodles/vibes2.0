@@ -74,8 +74,9 @@ const UserController = {
 
   beenList: async (req, res, next) => {
     try {
-      const { username } = req.body;
-      const user = await User.findOne({ username });
+      console.log(req.body);
+      const { ssid } = req.cookies;
+      const user = await User.findOne({ _id: ssid });
 
       if (!user) {
         const err = new Error(
@@ -85,10 +86,9 @@ const UserController = {
       }
 
       //get beenList from user, should be an array of IDs
-      // user.beenList.push(placeData);
+      user.beenList.push(req.body);
       res.locals.beenList = user.beenList;
       await user.save();
-
       return next();
     } catch (error) {
       const err = new Error('Error in UserController.login: ' + error.message);

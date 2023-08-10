@@ -31,10 +31,9 @@ router.post(
   }
 );
 
-// populate beenList handler, add middleware for querying mongo for beenList and SQL for location names
-// router.post('/beenList', userController.beenList, (req, res) => {
-//   res.status(200).json({ beenList: res.locals.beenList });
-// });
+router.post('/beenList', userController.beenList, (req, res) => {
+  res.status(200).json({ beenList: res.locals.beenList });
+});
 
 router.post('/savedList', userController.savedList, (req, res) => {
   res.status(200).json({ savedList: res.locals.savedList });
@@ -49,11 +48,15 @@ router.post('/placeSearch', placesController.getResults, (req, res) => {
 });
 
 router.get('/verifyUser', sessionController.verifyUser, (req, res) => {
-  return res.status(200).json(false);
+  return res.status(200).redirect('/user');
 });
 
 router.get('/savedList', placesController.getSavedPlaces, (req, res) => {
   return res.status(200).json(res.locals.savedPlaces);
+});
+
+router.post('/beenLists', placesController.getBeenPlaces, (req, res) => {
+  return res.status(200).json({ beenPlaces: res.locals.beenPlaces });
 });
 
 //populate tags for searchList

@@ -20,7 +20,7 @@ mongoose
   .catch((err) => console.log(err));
 
 const ratedlocationSchema = new Schema({
-  locationID: { type: String, required: true },
+  neighborhood: { type: String, required: true },
   address: { type: String, requried: true },
   name: { type: String, required: true },
   score: { type: Number, required: true },

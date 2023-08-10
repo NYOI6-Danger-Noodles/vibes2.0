@@ -89,4 +89,26 @@ placesController.getSavedPlaces = async (req, res, next) => {
   }
 };
 
+placesController.getBeenPlaces = async (req, res, next) => {
+  try {
+    const { ssid } = req.cookies;
+    const user = await User.findOne({ _id: ssid });
+    if (!user) {
+      const err = new Error(
+        'Error in placesController.getSavedPlaces: User not found'
+      );
+      return next(err);
+    }
+
+    res.locals.beenPlaces = user.beenList;
+    console.log(res.locals.beenPlaces);
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error in placesController.getBeenPlaces middleware',
+      status: 400,
+      message: { err: 'An error has occured' },
+    });
+  }
+};
 module.exports = placesController;
